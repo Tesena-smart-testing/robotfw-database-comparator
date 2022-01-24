@@ -1,4 +1,14 @@
-#How to setup your Windows 10 machine to run the tests:
+# About the project
+The main purpose of this test automation project is to compare data stored in a database with expected results or to compare data between two databases.
+
+The source code is written in Robot Framework using DatabaseLibrary and DiffLibrary.
+
+Author: Lucie Lavickova, lucie.lavickova@tesena.com
+
+# Disclaimer
+The solution has been tested with Windows 10 OS and MySQL Database only.
+
+# How to set up your Windows 10 machine to run the tests:
 
 ## 1. Install Python 3
 - https://www.python.org/downloads
