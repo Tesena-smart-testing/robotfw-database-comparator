@@ -1,0 +1,51 @@
+#How to setup your Windows 10 machine to run the tests:
+
+## 1. Install Python 3
+- https://www.python.org/downloads
+- make sure to check the option to **add Python to PATH** during the installation
+
+## 2. Install Robot Framework libraries
+- first, activate your virtual environment by executing `venv/Scripts/activate.bat` in the project root directory
+- then execute `pip install -r requirements.txt` to install all required libraries
+
+## 2. Create User Environment variables
+Set up your **User Environment variables** with names mentioned below (at least the ones you want to run your tests for) and fill them with your DB credentials:
+
+DEV
+* DEV_DB_USER
+* DEV_DB_PASSWORD
+
+QA
+* QA_DB_USER
+* QA_DB_PASSWORD
+
+You can set these variables in command line using setx command, see below. Just replace "login" and "password" with your credentials:
+```
+setx DEV_DB_USER "login"
+setx DEV_DB_PASSWORD "password"
+setx QA_DB_USER "login"
+setx QA_DB_PASSWORD "password"
+```
+
+## 3. Add SQL Queries and/or Expected Results
+Create an SQL query and save it to **SQL_Queries** folder as an **.sql file**.
+
+If you want to compare the query results to expected results, put these to **Environments/XX/Expected_Results** where XX is the environment. Use a filename equal to the SQL query filename, just with .csv extension. Use commas and quotes as separators ("value","value").
+
+## 4. Execute the tests
+For comparing the expected and actual result for one DB, use:
+
+``robot -t "Verify data in database" -v ENV:DEV -d Report .``
+
+For comparing data between two different environments, use:
+
+``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA -d Report .``
+
+Note: allowed options for ENV variables are DEV and QA
+
+Using *pabot* instead of *robot* is theoretically possible, however it is not recommended to run these tests in parallel - it might cause conflict when storing actual results. Also, as pabot is able to parallelize tests from different test files only, while here both tests are in one file, it would not parallelize them.
+
+## 5. Interpret results
+Check the **log.html** in **Report** folder
+
+Use PyCharm to easily compare files (select 2 CSV files, right-click > Compare Files) - this will nicely highlight the differences in color ;)
