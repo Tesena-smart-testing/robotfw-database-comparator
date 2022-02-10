@@ -29,7 +29,7 @@ QA
 * QA_DB_USER
 * QA_DB_PASSWORD
 
-You can set these variables in command line using setx command, see below. Just replace "login" and "password" with your credentials:
+You can set these variables in Win10 commandline using setx command, see below. Just replace "login" and "password" with your credentials:
 ```
 setx DEV_DB_USER "login"
 setx DEV_DB_PASSWORD "password"
