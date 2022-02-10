@@ -45,15 +45,16 @@ If you want to compare the query results to expected results, put these to **Env
 ## 4. Execute the tests
 For comparing the expected and actual result for one DB, use:
 
-``robot -t "Verify data in database" -v ENV:DEV -d Report .``
+``robot -t "Verify data in database" -v ENV:DEV --removekeywords name:ConnectToDatabase -d Report .``
 
 For comparing data between two different environments, use:
 
-``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA -d Report .``
+``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA --removekeywords name:ConnectToDatabase -d Report .``
 
-Note: allowed options for ENV variables are DEV and QA
-
-Using *pabot* instead of *robot* is theoretically possible, however it is not recommended to run these tests in parallel - it might cause conflict when storing actual results. Also, as pabot is able to parallelize tests from different test files only, while here both tests are in one file, it would not parallelize them.
+Notes: 
+- allowed options for ENV variables are DEV and QA.
+- the argument ``--removekeywords name:ConnectToDatabase`` hides your login credentials so that they do not appear in the log file.
+- using **pabot** to run the tests in this project in parallel is not recommended - it might cause a conflict when storing actual results. Also, as pabot is able to parallelize tests from different test files only, while here both tests are in one file, it would not parallelize them.
 
 ## 5. Interpret results
 Check the **log.html** in **Report** folder
