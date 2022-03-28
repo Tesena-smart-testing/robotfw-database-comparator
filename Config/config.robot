@@ -4,17 +4,17 @@ Documentation   Database connection parameters - DB host, DB name, username, pas
 
 *** Variables ***
 # DEV environment
-${DEV_DB_HOST}         sql11.freemysqlhosting.net
-${DEV_DB_NAME}         sql11467339
+${DEV_DB_HOST}         localhost\\SQLEXPRESS
+${DEV_DB_NAME}         db14215456
 ${DEV_DB_USER}         %{DEV_DB_USER}
 ${DEV_DB_PASSWORD}     %{DEV_DB_PASSWORD}
-${DEV_DB_API_MODULE}   pymysql
-${DEV_DB_PORT}         3306
+${DEV_DB_API_MODULE}   pyodbc
+${DEV_DB_PORT}         62693
 
 # QA environment
-${QA_DB_HOST}          sql11.freemysqlhosting.net
-${QA_DB_NAME}          sql11467570
+${QA_DB_HOST}          localhost\\SQLEXPRESS
+${QA_DB_NAME}          db65411587
 ${QA_DB_USER}          %{QA_DB_USER}
 ${QA_DB_PASSWORD}      %{QA_DB_PASSWORD}
-${QA_DB_API_MODULE}    pymysql
-${QA_DB_PORT}          3306
+${QA_DB_API_MODULE}    pyodbc
+${QA_DB_PORT}          62693
