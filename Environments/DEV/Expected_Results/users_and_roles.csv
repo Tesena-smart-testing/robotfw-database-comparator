@@ -1,3 +1,4 @@
-"Petra","Malá","petra.mala@seznam.cz","0","customer"
-"Lucie","Lavickova","lucie.lavickova@tesena.com","1","employee"
-"Dominik","Starý","dominik.stary@gmail.com","1","customer"
+"Lucie","Lavičková","lucie.lavickova@tesena.com","True","Admin"
+"Petr","Šťastný","petr.stastny@tesena.com","True","Sales Representative"
+"Magdalena","Novotná","magdalenka.n@seznam.cz","True","Customer"
+"Václav","Ostrý","v.ostry@gmail.com","False","Customer"
