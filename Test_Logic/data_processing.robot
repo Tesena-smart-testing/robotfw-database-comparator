@@ -25,7 +25,7 @@ Get data from database and store in CSV files
     @{sql_file_list}        list files in directory         ${SQL_FILEPATH}     pattern=*.sql
     should not be empty     ${sql_file_list}    msg=There is no SQL query to be executed. Please save the SQL query in .sql format to ${SQL_FILEPATH} directory first.
     FOR    ${sql_filename}   IN       @{sql_file_list}
-       @{query_result} =    execute sql query       ${environment}    ${sql_filename}
+       @{query_result} =    execute sql query       ${sql_filename}
        ${csv_filename} =    replace string          ${sql_filename}   .sql    .csv
        ${csv_filepath} =    set variable    ${DATA_PATH}/${environment}/${ACTUAL_RESULTS_FOLDERNAME}/${csv_filename}
        save data to CSV file    ${csv_filepath}     @{query_result}     
@@ -39,7 +39,7 @@ Connect to ${environment} database
 
 Execute SQL query
     [Documentation]     Connects to the given DB environment, executes given SQL file and saves the query result to a CSV file.
-    [Arguments]         ${environment}      ${sql_filename}
+    [Arguments]         ${sql_filename}
     [Return]            @{query_result}
     # get query result from database
     ${sql_query}            get file        ${SQL_FILEPATH}/${sql_filename}
