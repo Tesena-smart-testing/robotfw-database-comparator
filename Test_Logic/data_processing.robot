@@ -1,6 +1,7 @@
 *** Settings ***
 Library     DatabaseLibrary
 Library     String
+Library     Collections
 Library     DiffLibrary
 Library     OperatingSystem
 Resource    ../Config/config.robot
@@ -58,6 +59,7 @@ Save data to CSV file
     
 Process cells from row to csv format
     [Arguments]     ${row}
+    @{row}              convert to list     ${row}  # the row comes as tuple from the SQL query result -> convert it to a list
     ${row_data}         set variable        ${EMPTY}
     ${cell_nr}          set variable        1
     FOR  ${cell_data}  IN  @{row}  #loop through cells in a row, wrap them in quotes and chain with comma
