@@ -4,7 +4,6 @@ Library     String
 Library     Collections
 Library     DiffLibrary
 Library     OperatingSystem
-Resource    ../Config/config.robot
 
 *** Variables ***
 #filepaths
@@ -21,7 +20,7 @@ Get data from database and store in CSV files
     remove files         ${DATA_PATH}/${environment}/${ACTUAL_RESULTS_FOLDERNAME}/*.csv
 
     # get data from database
-    connect to ${environment} database    
+    connect to database     dbConfigFile=./Config/${environment}.cfg    
     @{sql_file_list}        list files in directory         ${SQL_FILEPATH}     pattern=*.sql
     should not be empty     ${sql_file_list}    msg=There is no SQL query to be executed. Please save the SQL query in .sql format to ${SQL_FILEPATH} directory first.
     FOR    ${sql_filename}   IN       @{sql_file_list}
@@ -32,11 +31,6 @@ Get data from database and store in CSV files
         save data to CSV file    ${csv_filepath}     @{query_result}     
     END
     disconnect from database
-
-Connect to ${environment} database
-    connect to database     module_name=${${environment}_DB_API_MODULE}  database=${${environment}_DB_NAME}
-    ...                     username=${${environment}_DB_USER}  password=${${environment}_DB_PASSWORD}
-    ...                     host=${${environment}_DB_HOST}  port=${${environment}_DB_PORT} 
 
 Save data to CSV file
     [Documentation]    Process the data from the SQL query result and save them into a CSV file
