@@ -46,12 +46,12 @@ Create SQL queries you want to be executed in the Database and save them to **SQ
 
 If you want to compare the query results to expected results, put these to **Environments/XX/Expected_Results** where XX is the environment. Use a filename equal to the SQL query filename, just with .csv extension. Use commas and quotes as separators: `("firstvalue","secondvalue","thirdvalue")`
 
-## 4. Execute the tests
-For comparing the expected and actual result for one DB, use:
+## 4. Execute Tests
+To compare expected and actual result for one database, use:
 
 ``robot -t "Verify data in database" -v ENV:DEV --removekeywords name:ConnectToDatabase -d Report .``
 
-For comparing data between two different environments, use:
+To compare data between two different databases (environments), use:
 
 ``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA --removekeywords name:ConnectToDatabase -d Report .``
 
