@@ -10,13 +10,17 @@ The solution has been tested with Windows 10 OS and MySQL Database only.
 
 # How to set up your Windows 10 machine to run the tests:
 
-## 1. Install Python 3
+## 1. Install Python 3 and virtualenv
 - https://www.python.org/downloads
 - make sure to check the option to **add Python to PATH** during the installation
+- in commandline terminal, verify python is installed correctly: `python --version` - the output should provide you with the installed version
+- verify pip has been installed as well: `pip --version`
+- finally, **install virtual environment** by executing `pip install --user virtualenv` in a commandline terminal
 
 ## 2. Install Robot Framework libraries
-- first, activate your virtual environment by executing `venv/Scripts/activate.bat` in the project root directory
-- then execute `pip install -r requirements.txt` to install all required libraries
+- in commandline terminal, navigate to your project root directory and create new virtual environment by executing `virtualenv venv`
+- activate the newly created virtual environment: `.\venv\Scripts\activate`
+- then execute `pip install -r requirements.txt` to install all required libraries for this project
 
 ## 2. Create User Environment variables
 Set up your **User Environment variables** with names mentioned below (at least the ones you want to run your tests for) and fill them with your DB credentials:
@@ -29,7 +33,7 @@ QA
 * QA_DB_USER
 * QA_DB_PASSWORD
 
-You can set these variables in Win10 commandline using setx command, see below. Just replace "login" and "password" with your credentials:
+You can set these variables in Win10 commandline using setx command. Just replace "login" and "password" with your credentials:
 ```
 setx DEV_DB_USER "login"
 setx DEV_DB_PASSWORD "password"
@@ -37,10 +41,10 @@ setx QA_DB_USER "login"
 setx QA_DB_PASSWORD "password"
 ```
 
-## 3. Add SQL Queries and/or Expected Results
-Create an SQL query and save it to **SQL_Queries** folder as an **.sql file**.
+## 3. Create SQL Queries and Expected Results
+Create SQL queries you want to be executed in the Database and save them to **SQL_Queries** folder as **.sql files**. One query per file.
 
-If you want to compare the query results to expected results, put these to **Environments/XX/Expected_Results** where XX is the environment. Use a filename equal to the SQL query filename, just with .csv extension. Use commas and quotes as separators ("value","value").
+If you want to compare the query results to expected results, put these to **Environments/XX/Expected_Results** where XX is the environment. Use a filename equal to the SQL query filename, just with .csv extension. Use commas and quotes as separators: `("firstvalue","secondvalue","thirdvalue")`
 
 ## 4. Execute the tests
 For comparing the expected and actual result for one DB, use:
@@ -52,11 +56,14 @@ For comparing data between two different environments, use:
 ``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA --removekeywords name:ConnectToDatabase -d Report .``
 
 Notes: 
-- allowed options for ENV variables are DEV and QA.
+- in the example project, the allowed options for ENV variables are DEV and QA. But you can modify it by adding more environments in Config/config.robot and Environments directory.
 - the argument ``--removekeywords name:ConnectToDatabase`` hides your login credentials so that they do not appear in the log file.
-- using **pabot** to run the tests in this project in parallel is not recommended - it might cause a conflict when storing actual results. Also, as pabot is able to parallelize tests from different test files only, while here both tests are in one file, it would not parallelize them.
 
 ## 5. Interpret results
 Check the **log.html** in **Report** folder
 
-Use PyCharm to easily compare files (select 2 CSV files, right-click > Compare Files) - this will nicely highlight the differences in color ;)
+If you want to compare the CSV files visually, you can use various tools/apps, e.g.:
+- PyCharm: select 2 CSV files, right-click > Compare Files
+- Visual Studio Code: select 2 CSV files, right-click > Compare Selected
+- Notepad++ you can use Compare plugin: https://www.makeuseof.com/tag/notepad-compare-two-files-plugin
+
