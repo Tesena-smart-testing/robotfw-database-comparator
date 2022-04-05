@@ -1,6 +1,6 @@
 *** Settings ***
-Documentation   Database connection parameters - DB host, DB name, username, password etc.
-...             IMPORTANT: login credentials (username and password) should be stored in user environment variables, see README.md for more info
+Documentation   This file stores database connection parameters - DB host, DB name, username, password etc.
+...             IMPORTANT: login credentials (username and password) need be stored in user environment variables, see README.md for more info
 
 *** Variables ***
 # DEV environment
