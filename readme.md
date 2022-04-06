@@ -56,6 +56,7 @@ To compare data between two different databases (environments), use:
 ``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA --removekeywords name:DatabaseLibrary.ConnectToDatabase -d Report .``
 
 To run both tests with default arguments, use:
+
 ``robot --removekeywords name:DatabaseLibrary.ConnectToDatabase -d Report .``
 
 Notes: 
