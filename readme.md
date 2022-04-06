@@ -1,12 +1,12 @@
 # About the project
 The main purpose of this test automation project is to compare data stored in a database with expected results or to compare data between two databases.
 
-The source code is written in Robot Framework using DatabaseLibrary and DiffLibrary.
+The source code of this automated test project is written in Robot Framework using DatabaseLibrary and DiffLibrary.
 
 Author: Lucie Lavickova, lucie.lavickova@tesena.com
 
 # Disclaimer
-The solution has been tested with Windows 10 OS and MySQL Database only.
+The solution has been tested with Windows 10 OS and Microsoft SQL Database. Also, a test with MySQL worked well, you just need to use pymysql driver instead of pyodbc (replace it in requirements.txt file and in Config\config.robot). For other OS and Database engines, a few adjustments in the code might be needed. In case you decide to give it a try, I would be glad if you provide me with some feedback :)
 
 # How to set up your Windows 10 machine to run the tests:
 
