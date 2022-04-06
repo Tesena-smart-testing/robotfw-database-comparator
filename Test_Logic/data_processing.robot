@@ -18,27 +18,28 @@ Get data from database and store in CSV files
     [Documentation]    This keyword is to be used as the test setup to query database 
     ...     with provided SQL Queries and store their results in CSV files
     [Arguments]        ${environment}
-    # first, clean up the folder with actual results
-    remove files         ${DATA_PATH}/${environment}/${ACTUAL_RESULTS_FOLDERNAME}/*.csv
-    # get data from database and save it as CSV
-    connect to ${environment} database    
+    # clean up old actual results
+    clean up actual results from previous test executions    ${environment}
+    # connect to database
+    connect to database     dbapiModuleName=${${environment}_DB_API_MODULE}  dbName=${${environment}_DB_NAME}
+    ...                     dbUsername=${${environment}_DB_USER}  dbPassword=${${environment}_DB_PASSWORD}
+    ...                     dbHost=${${environment}_DB_HOST}  dbPort=${${environment}_DB_PORT}
+    # get list of SQL files with SQL queries
     @{sql_file_list}        list files in directory         ${SQL_FILEPATH}     pattern=*.sql
     should not be empty     ${sql_file_list}    
     ...     msg=There is no SQL query to be executed. Please save the SQL query in .sql format to ${SQL_FILEPATH} directory first.
+    # query database and save results as CSV files
     FOR    ${sql_filename}   IN       @{sql_file_list}
        @{query_result} =    execute sql query       ${sql_filename}
-       ${csv_filename} =    replace string          ${sql_filename}   .sql    .csv
-       ${csv_filepath} =    set variable    ${DATA_PATH}/${environment}/${ACTUAL_RESULTS_FOLDERNAME}/${csv_filename}
-       save data to CSV file    ${csv_filepath}     @{query_result}     
+       save data to CSV file    ${sql_filename}    ${environment}     @{query_result}     
     END
     # close the connection to the database
     disconnect from database
 
-Connect to ${environment} database
-    connect to database     dbapiModuleName=${${environment}_DB_API_MODULE}  dbName=${${environment}_DB_NAME}
-    ...                     dbUsername=${${environment}_DB_USER}  dbPassword=${${environment}_DB_PASSWORD}
-    ...                     dbHost=${${environment}_DB_HOST}  dbPort=${${environment}_DB_PORT}
-
+Clean up actual results from previous test executions
+    [Arguments]     ${environment}
+    remove files    ${DATA_PATH}/${environment}/${ACTUAL_RESULTS_FOLDERNAME}/*.csv
+    
 Execute SQL query
     [Arguments]         ${sql_filename}
     [Return]            @{query_result}
@@ -47,7 +48,12 @@ Execute SQL query
     @{query_result}         query           ${sql_query}
 
 Save data to CSV file
-    [Arguments]    ${csv_filepath}    @{data}    
+    [Arguments]    ${sql_filename}    ${environment}        @{data}   
+    # prepare the csv file path 
+    ${csv_filename} =    replace string          ${sql_filename}   .sql    .csv
+    ${csv_filepath} =    set variable    ${DATA_PATH}/${environment}/${ACTUAL_RESULTS_FOLDERNAME}/${csv_filename}
+       
+    # iterate through rows in data list and process them to the right format
     ${csv_data}             set variable            ${EMPTY}
     ${line_nr}              set variable            1
     FOR  ${row}  IN     @{data}
@@ -55,6 +61,8 @@ Save data to CSV file
        ${csv_data}         set variable if         ${line_nr}>1        ${csv_data}\n${row_data}       ${row_data}  #add new line after each row
        ${line_nr}          set variable            ${line_nr}+1
     END
+
+    # save data in csv file
     create file            ${csv_filepath}      ${csv_data}
     
 Process cells from row to csv format
