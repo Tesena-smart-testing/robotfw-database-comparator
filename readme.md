@@ -49,15 +49,15 @@ If you want to compare the query results to expected results, put these to **Env
 ## 4. Execute Tests
 To compare expected and actual result for one database, use:
 
-``robot -t "Verify data in database" -v ENV:DEV --removekeywords name:ConnectToDatabase -d Report .``
+``robot -t "Verify data in database" -v ENV:DEV --removekeywords name:DatabaseLibrary.ConnectToDatabase -d Report .``
 
 To compare data between two different databases (environments), use:
 
-``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA --removekeywords name:ConnectToDatabase -d Report .``
+``robot -t "Compare data between two databases" -v ENV1:DEV -v ENV2:QA --removekeywords name:DatabaseLibrary.ConnectToDatabase -d Report .``
 
 Notes: 
 - in the example project, the allowed options for ENV variables are DEV and QA. But you can modify it by adding more environments in Config/config.robot and Environments directory.
-- the argument ``--removekeywords name:ConnectToDatabase`` hides your login credentials so that they do not appear in the log file.
+- the argument ``--removekeywords name:DatabaseLibrary.ConnectToDatabase`` hides your DB login credentials so that they do not appear in the test log file.
 
 ## 5. Interpret results
 Check the **log.html** in **Report** folder
